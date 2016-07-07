@@ -1,4 +1,4 @@
-// JavaScript source code
+// Lambda Satellite NodeJS code
 'use strict';
 
 console.log('Loading function');

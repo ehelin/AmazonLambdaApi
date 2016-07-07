@@ -98,9 +98,9 @@ namespace AmazonLambdaService
         {
             SatelliteUpdate satelliteUpdate = null;
 
-            string getWebClientResult = GET_WebClient();
-            string getHttpClientResult1 = GET_HttpClient_HdrMethod1().Result;
-            string getHttpClientResult2 = GET_HttpClient_HdrMethod2().Result;
+            string getWebClientResult = GET_WebClient();                         //doesn't work
+            string getHttpClientResult1 = GET_HttpClient_HdrMethod1().Result;    //doesn't work
+            string getHttpClientResult2 = GET_HttpClient_HdrMethod2().Result;    //works!
 
             //TODO - convert result to a satelliteupdate or clientupdate
             satelliteUpdate = new SatelliteUpdate();
