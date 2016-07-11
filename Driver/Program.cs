@@ -1,5 +1,4 @@
 ﻿using System;
-using Shared.Dto;
 using Shared.Interfaces;
 using AmazonLambdaService;
 
@@ -17,7 +16,7 @@ namespace Driver
             TestAwsSampleGetCall();
             TestSatelliteGet();
         }
-        
+
         private static void TestAwsSampleGetCall()
         {
             string host = "";
@@ -34,6 +33,7 @@ namespace Driver
             string token = "";
             string contentType = "";
             string url = "";
+            string satelliteUpdateId = "";
 
             IService serv = new AmazonLambdaServiceImpl(host,
                                                         date,
@@ -48,8 +48,9 @@ namespace Driver
                                                         secretKey,
                                                         token,
                                                         contentType,
-                                                        url, 
-                                                        true);
+                                                        url,
+                                                        true,
+                                                        satelliteUpdateId);
             bool result = serv.TestAwsSignatureCode();
 
             if (!result)
@@ -75,6 +76,7 @@ namespace Driver
             string subUrl = "";
             string algorithm = "";
             string urlSuffix = "";
+            string satelliteUpdateId = "";
 
             IService serv = new AmazonLambdaServiceImpl(host,
                                                         date,
@@ -89,12 +91,14 @@ namespace Driver
                                                         secretKey,
                                                         token,
                                                         contentType,
-                                                        url, 
-                                                        false);
-            SatelliteUpdate update = serv.GetSatellite();
+                                                        url,
+                                                        false,
+                                                        satelliteUpdateId);
+            string satelliteUpdate = serv.GetSatellite();
 
-            if (update == null)
-                throw new System.Exception("GET object is null");
+            if (String.IsNullOrEmpty(satelliteUpdate))
+                throw new Exception("GET object is null");
+
         }
     }
 }

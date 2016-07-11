@@ -1,0 +1,12 @@
+﻿@model NetCoreWebApp.Models.Home.SatelliteGetDisplayModel
+@{
+    ViewData["Title"] = ".NET Core Amazon Lambda API Gateway Sample Application";
+}
+
+<div>
+    <h5>.NET Core Amazon Lambda API Gateway Sample Application</h5>
+    <a href="@Url.Action("Index", "Home")">Home</a>
+    <br/>
+    <p>Result:</p>
+    <p>@Model.SatelliteUpdate</p>
+</div>

@@ -1,5 +1,4 @@
 ﻿using System;
-using Shared.Dto;
 using Shared.Interfaces;
 using AmazonAuthentication;
 using System.Net;
@@ -36,7 +35,8 @@ namespace AmazonLambdaService
                                         string token,
                                         string contentType,
                                         string url,
-                                        bool test)
+                                        bool test,
+                                        string satelliteUpdateId)
         {
             //regular headers
             this.token = token;
@@ -54,7 +54,7 @@ namespace AmazonLambdaService
             else
             {
                 this.headers = GetHeaders();
-                this.parameters = GetParameters();
+                this.parameters = GetParameters(satelliteUpdateId);
             }
 
             authentication = new AmazonAuthenticationImpl(host,
@@ -76,7 +76,7 @@ namespace AmazonLambdaService
             string authorization = this.authentication.GetAuthorization();
             headers.Add("Authorization", authorization);
         }
-        
+
         public bool TestAwsSignatureCode()
         {
             bool works = false;
@@ -94,28 +94,25 @@ namespace AmazonLambdaService
 
             return works;
         }
-        public SatelliteUpdate GetSatellite()
+        public string GetSatellite()
         {
-            SatelliteUpdate satelliteUpdate = null;
+            string result = string.Empty;
 
-            string getWebClientResult = GET_WebClient();                         //doesn't work
-            string getHttpClientResult1 = GET_HttpClient_HdrMethod1().Result;    //doesn't work
-            string getHttpClientResult2 = GET_HttpClient_HdrMethod2().Result;    //works!
+            //string getWebClientResult = GET_WebClient();
+            //string getHttpClientResult1 = GET_HttpClient_HdrMethod1().Result;
+            result = GET_HttpClient_HdrMethod2().Result;
 
-            //TODO - convert result to a satelliteupdate or clientupdate
-            satelliteUpdate = new SatelliteUpdate();
-
-            return satelliteUpdate;
+            return result;
         }
         public bool DeleteSatelliteUpdate(int id)
         {
             throw new NotImplementedException();
         }
-        public bool InsertSatelliteUpdate(SatelliteUpdate update)
+        public bool InsertSatelliteUpdate(string update)
         {
             throw new NotImplementedException();
         }
-        public bool UpdateSatelliteUpdate(SatelliteUpdate update)
+        public bool UpdateSatelliteUpdate(string update)
         {
             throw new NotImplementedException();
         }
@@ -180,11 +177,11 @@ namespace AmazonLambdaService
             try
             {
                 client.Timeout = new TimeSpan(1, 0, 0);
-                
-                foreach (KeyValuePair<string, string> header in headers)
-                   client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
 
-                HttpResponseMessage httpResponseMsg = await client.GetAsync(url);
+                foreach (KeyValuePair<string, string> header in headers)
+                    client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
+
+                HttpResponseMessage httpResponseMsg = await client.GetAsync(url).ConfigureAwait(false);
                 response = await httpResponseMsg.Content.ReadAsStringAsync();
             }
             catch (Exception e)
@@ -198,11 +195,11 @@ namespace AmazonLambdaService
         #endregion
 
         #region Shared 
-        
+
         private Dictionary<string, string> GetHeadersTestSuite()
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
- 
+
             headers.Add("Host", this.host);
             headers.Add("X-Amz-Date", this.date);
 
@@ -230,12 +227,11 @@ namespace AmazonLambdaService
 
             return parameters;
         }
-        //hard coded for ease and since it won't change anytime soon
-        private Dictionary<string, string> GetParameters()
+        private Dictionary<string, string> GetParameters(string id)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-            parameters.Add("SatelliteUpdateId", "5828");
+            parameters.Add("SatelliteUpdateId", id);
 
             return parameters;
         }

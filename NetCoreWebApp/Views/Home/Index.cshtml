@@ -1,0 +1,15 @@
+﻿@model NetCoreWebApp.Models.Home.SatelliteGetModel
+@{
+    ViewData["Title"] = ".NET Core Amazon Lambda API Gateway Sample Application";
+}
+
+<div>
+    <h5>.NET Core Amazon Lambda API Gateway Sample Application</h5>
+    <br/>
+    @using (Html.BeginForm("DisplaySatelliteUpdate","Home", FormMethod.Post))
+    {
+        <input type="submit" value="Get Satellite Update" />
+        @Html.TextBoxFor(model => model.SatelliteUpdateId)
+    }
+
+</div>
