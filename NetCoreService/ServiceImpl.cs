@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 //NOTE: I added this via browse...replace with Nuget package once you figure out where that is
 //http://stackoverflow.com/questions/30304365/using-httpclient-in-asp-net-5-app
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Service
 {
@@ -14,9 +15,9 @@ namespace Service
         {
             string update = GetSatelliteUpdate(url).Result;
 
-            return update; 
+            return update;
         }
-        
+
         private async Task<string> GetSatelliteUpdate(string url)
         {
             string satelliteUpdate = null;
@@ -25,6 +26,10 @@ namespace Service
 
             try
             {
+
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", Constants.NET461_TOKEN);
+
                 client.Timeout = new TimeSpan(1, 0, 0);
                 response = await client.GetAsync(url);
             }
