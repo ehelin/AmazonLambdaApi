@@ -8,6 +8,7 @@ namespace Net46AmazonLambdaServices.Controllers
 {
     public class Net46AmazonLambdaController : ApiController
     {
+        [Authorize]
         public string Get(string satelliteId)
         {
             string satelliteUpdate = String.Empty;
