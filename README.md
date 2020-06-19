@@ -1,5 +1,5 @@
 # Amazon Lambda Api
-A C# Project create to explore how to use AWS Lamda's
+A C# Project created to explore how to use AWS Lamda's
 
 Explores accessing resources via Amazon Lambda/Amazon API Gateway using Rest HTTP service calls and the AWS Signature Authentication
 
