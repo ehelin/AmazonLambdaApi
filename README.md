@@ -7,8 +7,8 @@ Explores accessing resources via Amazon Lambda/Amazon API Gateway using Rest HTT
 
 These items are also related to this project. 
 <br/>
-Blog Posts:
 <br/>
+Blog Posts:
 <br/>
 <a href="https://erichelin.wordpress.com/2016/06/01/amazon-lambda-part-1-the-basic-call/">Basic Call</a>
 <br/>
